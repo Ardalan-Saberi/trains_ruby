@@ -32,5 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.5"
-  
+  spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "guard-rspec", "~> 4.7"
+  spec.add_development_dependency "wdm", ">= 0.1.0"
 end
