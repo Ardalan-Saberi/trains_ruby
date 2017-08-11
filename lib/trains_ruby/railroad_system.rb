@@ -8,7 +8,6 @@ module TrainsRuby
       @stations[origin_station_name].add_railroad_to(destination_station_name, distance)
     end
 
-    private
     def initialize
       @stations = {}
     end

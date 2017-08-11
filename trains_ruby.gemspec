@@ -35,4 +35,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "guard-rspec", "~> 4.7"
   spec.add_development_dependency "wdm", ">= 0.1.0"
+  spec.add_development_dependency "pry-byebug"
 end

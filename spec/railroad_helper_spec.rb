@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe h = TrainsRuby::RailroadHelper do
-  context "When creating RailRoadSystem from string" do
+describe h = TrainsRuby::RailroadHelper do
+  describe "#create_railroad_system_from_string" do
 
     it "create an empty railroad system given an empty string" do
       rs = h.create_railroad_system_from_string("")
