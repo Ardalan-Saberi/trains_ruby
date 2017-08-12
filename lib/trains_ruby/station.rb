@@ -1,6 +1,6 @@
 module TrainsRuby
   class Station
-    attr_reader :name
+    attr_reader :name, :neighbours
 
     def initialize(name)
       @name = name
@@ -29,6 +29,10 @@ module TrainsRuby
 
     def hash
       name.hash
+    end
+
+    def to_s
+      "<Station: #{@name} Neighbours: #{@neighbours}>"
     end
   end
 
