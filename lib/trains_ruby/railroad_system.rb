@@ -39,23 +39,24 @@ module TrainsRuby
 
       @stations[current_station].neighbours.to_a
       .reject { |next_station, next_distance|
+        # p "before #{visited}, #{stops_count}, proposed #{next_station}"
         if block_given?
-          yield(next_distance, current_distance)
+          yield(next_distance, current_distance, stops_count)
         else
           false
         end
       }
       .each do |next_station, next_distance|
+        # p "after #{visited}, #{stops_count}, proposed #{next_station}"
         if next_station == destination
           current_distance += next_distance
-          stops_count += 1
           routes_count += 1
+          # p "found [#{visited.keys.join(',')}, #{next_station}]"
         elsif !visited.key?(next_station) && @stations.key?(next_station)
           routes_count +=
             count_routes_recurr(destination, next_station, visited.merge({next_station => true}), stops_count + 1, current_distance + next_distance, 0, &block)
         end
       end
-
       return routes_count
     end
 
@@ -65,7 +66,11 @@ module TrainsRuby
 
       case constraint_type
       when :max_distance
-        return lambda{|next_distance, current_distance| constraint_value && constraint_value < next_distance + current_distance  }
+        return lambda{|next_distance, current_distance, stops_count| constraint_value && constraint_value < next_distance + current_distance  }
+      when :max_stops
+        return lambda{|next_distance, current_distance, stops_count|
+          # p "#{stops_count} > #{constraint_value} #{constraint_value <= stops_count ? 'reject' : 'accept'}";
+        constraint_value && constraint_value <= stops_count }
       else
         nil
       end
