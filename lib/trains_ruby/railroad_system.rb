@@ -38,20 +38,18 @@ module TrainsRuby
     def count_routes_recurr(destination, current_station, visited, stops_count, current_distance, routes_count, &block)
 
       @stations[current_station].neighbours.to_a
-      .reject { |next_station, next_distance|
-        # p "before #{visited}, #{stops_count}, proposed #{next_station}"
+      .collect {|next_station, next_distance| [next_station, next_distance, next_station == destination]}
+      .reject { |next_station, next_distance, is_next_destination|
         if block_given?
-          yield(next_distance, current_distance, stops_count)
+          yield(next_distance, current_distance, stops_count, is_next_destination)
         else
           false
         end
       }
-      .each do |next_station, next_distance|
-        # p "after #{visited}, #{stops_count}, proposed #{next_station}"
-        if next_station == destination
-          current_distance += next_distance
+      .each do |next_station, next_distance, is_next_destination|
+        if is_next_destination
+          # current_distance += next_distance
           routes_count += 1
-          # p "found [#{visited.keys.join(',')}, #{next_station}]"
         elsif !visited.key?(next_station) && @stations.key?(next_station)
           routes_count +=
             count_routes_recurr(destination, next_station, visited.merge({next_station => true}), stops_count + 1, current_distance + next_distance, 0, &block)
@@ -66,11 +64,14 @@ module TrainsRuby
 
       case constraint_type
       when :max_distance
-        return lambda{|next_distance, current_distance, stops_count| constraint_value && constraint_value < next_distance + current_distance  }
+        return lambda{|next_distance, current_distance, stops_count, is_next_destination|
+        constraint_value && next_distance + current_distance > constraint_value }
       when :max_stops
-        return lambda{|next_distance, current_distance, stops_count|
-          # p "#{stops_count} > #{constraint_value} #{constraint_value <= stops_count ? 'reject' : 'accept'}";
-        constraint_value && constraint_value <= stops_count }
+        return lambda{|next_distance, current_distance, stops_count, is_next_destination|
+        constraint_value && stops_count >= constraint_value }
+      when :exact_stops
+        return lambda{|next_distance, current_distance, stops_count, is_next_destination|
+        constraint_value && ((stops_count < constraint_value - 1 && is_next_destination) || (stops_count == constraint_value -1 && !is_next_destination) || (stops_count >= constraint_value))}
       else
         nil
       end

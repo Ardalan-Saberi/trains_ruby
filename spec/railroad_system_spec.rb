@@ -83,10 +83,11 @@ describe R = TrainsRuby::RailroadSystem do
       expect(@small_city_rs.count_routes("A", "C", {constraint_type: :max_stops, constraint_value: 2})).to eql(3)
     end
 
-    # it "should count routes between origin and destination with exact stops limit" do
-    #   expect(q.count_routes(@small_city_rs, "A", "C", {stops: 0})).to eql(1)
-    #   expect(q.count_routes(@small_city_rs, "A", "C", {stops: 1})).to eql(1)
-    #   expect(q.count_routes(@small_city_rs, "A", "C", {stops: 2})).to eql(1)
-    # end
+    it "should count routes between origin and destination with exact stops limit" do
+      expect(@small_city_rs.count_routes("A", "C", {constraint_type: :exact_stops, constraint_value: 0})).to eql(0)
+      expect(@small_city_rs.count_routes("A", "C", {constraint_type: :exact_stops, constraint_value: 1})).to eql(1)
+      expect(@small_city_rs.count_routes("A", "C", {constraint_type: :exact_stops, constraint_value: 2})).to eql(2)
+      expect(@small_city_rs.count_routes("A", "C", {constraint_type: :exact_stops, constraint_value: 3})).to eql(0)
+    end
   end
 end
