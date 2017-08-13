@@ -2,19 +2,15 @@
 
 # TLDR; Usage
 
-1- to install dev dependencies (in trains_ruby directory)
-
+1- to install dev dependencies (in trains_ruby directory)  
 *$ bundle install*
 
-2- to see tests passing with flying colours
-
+2- to see tests passing with flying colours  
 *$ rspec*
 
-3- to see it print out the solution to sample input from the problem statement
-
-*$ rake install*
-
-*$ rake demo*
+3- if you really really want to use the file input :)  
+*$ ruby main.rb ./sample_input1*  
+*$ ruby main.rb ./sample_input2*
 
 # The Story:
 
@@ -34,10 +30,27 @@ RouteCouteQuery's **constrainted_reducer** method pareses the constraint and gen
 **_All of above stuff is located in this directory: ./lib/trains_ruby_**
     
 # Tests:
-Used RSpec so the tests are pretty much self explanatory please look at **./lib/spec/unit** and **./lib/spec/integrations**
+Used RSpec so the tests are pretty much self explanatory please look at **./lib/spec/unit** and **./lib/spec/integrations**  
 
-Cheers,
+# Input File Format
+file's read line by line, each line contains a command as the first arguement and a list of arguements. two examples below. loading new graphs will purge the ones before them.
 
+./sample_input1:     the example from the problem statement  
+./sample_input2:    this is more of playing with the edge cases, what if command is not supported, what if arguments are missing, ...  
+
+_load AB4 DE3_  
+-> creates a RailroadSystem with tow railroads from station A to B and D to E  
+_get_route_distance A B C D_  
+-> calculates the distance of route from A to B to C to D  
+_count_routes A A max_stops_ 3   
+-> options for constraints are max_stops, max_distance, exact_stops  
+_get_shortest_route_ A B  
+->shortest route from A to B  
+
+# Output Format
+repeats the command and on the next line will put the response wiht "=>" at the beginning
+
+Cheers,  
 [Might add more details here](https://docs.google.com/document/d/1P00T4WOv4HyWcRHiS4p18dsmL-vU4pQbc2sxM8t9qzM/edit?usp=sharing)
 
 
