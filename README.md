@@ -2,13 +2,13 @@
 
 # TLDR; Usage
 
-1- to install dev dependencies (in trains_ruby directory)  
+1- To install dev dependencies (in trains_ruby directory)  
 *$ bundle install*
 
-2- to see tests passing with flying colours  
+2- To see tests passing with flying colours  
 *$ rspec*
 
-3- if you really really want to use the file input :)  
+3- If you really really want to try the the file input:D  
 *$ ruby main.rb ./sample_input1*  
 *$ ruby main.rb ./sample_input2*
 
@@ -33,22 +33,24 @@ RouteCouteQuery's **constrainted_reducer** method pareses the constraint and gen
 Used RSpec so the tests are pretty much self explanatory please look at **./lib/spec/unit** and **./lib/spec/integrations**  
 
 # Input File Format
-file's read line by line, each line contains a command as the first arguement and a list of arguements. two examples below. loading new graphs will purge the ones before them.
+File's read line by line, each line contains a command as the first arguement and a list of arguements. two examples below. loading new graphs will purge the ones before them.
 
 ./sample_input1:     the example from the problem statement  
 ./sample_input2:    this is more of playing with the edge cases, what if command is not supported, what if arguments are missing, ...  
 
-_load AB4 DE3_  
+**load AB4 DE3**   
 -> creates a RailroadSystem with tow railroads from station A to B and D to E  
-_get_route_distance A B C D_  
+**get_route_distance A B C D**    
 -> calculates the distance of route from A to B to C to D  
-_count_routes A A max_stops_ 3   
+**count_routes A A max_stops 3**     
 -> options for constraints are max_stops, max_distance, exact_stops  
-_get_shortest_route_ A B  
+**get_shortest_route A B**   
 ->shortest route from A to B  
 
 # Output Format
-repeats the command and on the next line will put the response wiht "=>" at the beginning
+Repeats the command and on the next line will put the response wiht "=>" at the beginning
+
+p.s. ruby version = 2.3.3
 
 Cheers,  
 [Might add more details here](https://docs.google.com/document/d/1P00T4WOv4HyWcRHiS4p18dsmL-vU4pQbc2sxM8t9qzM/edit?usp=sharing)
