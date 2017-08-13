@@ -1,11 +1,11 @@
 module TrainsRuby
   module RouteCountQuery
+    ConstraintError = Class.new(StandardError)
 
     def count_routes(origin, destination, constraint_type, constraint_value)
-      raise NoSuchRouteError unless stations[origin] && stations[destination]
+      raise NoSuchStationError, "invalid origin/destination" unless stations.key?(origin) && stations.key?(destination)
 
       to_destination = constrainted_reducer(destination, constraint_type, constraint_value)
-
       count_routes_from(origin, &to_destination)
     end
 
@@ -31,13 +31,12 @@ module TrainsRuby
           end
         end
       end
-
       # p routes
       routes.size
     end
 
     def constrainted_reducer(destination, constraint_type, constraint_value)
-      raise ConstraintError unless [:max_distance, :max_stops, :exact_stops].include?(constraint_type) && constraint_value.is_a?(Integer) && constraint_value.to_i >= 0
+      check_constraints(constraint_type, constraint_value)
 
       constraint_exceeded = false
 
@@ -68,5 +67,15 @@ module TrainsRuby
         end
       end
     end
+
+    def check_constraints(constraint_type, constraint_value)
+      unless [:max_distance, :max_stops, :exact_stops].include?(constraint_type)
+        raise ConstraintError, "Provided constraint type (#{constraint_type}) not in supported constraints"
+      end
+      unless constraint_value.is_a?(Integer) && constraint_value.to_i >= 0
+        raise ConstraintError, "Provided constraint value (#{constraint_value}) is not a positive integer"
+      end
+    end
+
   end
 end

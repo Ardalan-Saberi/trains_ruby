@@ -1,0 +1,36 @@
+get_route_distance a b
+get_shortest_route B B
+count_routes A C exact_stops 4
+count_routes C C max_stops 3
+xxx A Z
+load AB5 BC4 CD8 DC8 DE6 AD5 CE2 EB3 AE7
+get_route_distance A B C
+get_route_distance A D
+get_route_distance A D C
+get_route_distance A E B C D
+get_route_distance A E D
+count_routes C C max_stops 3
+count_routes A C exact_stops 4
+get_shortest_route A C
+get_shortest_route B B
+count_routes C C max_distance 30
+load bc4 ca3 da3 ab5 ac14 dc2 ad6
+get_route_distance a b c a
+get_route_distance a b x
+count_routes a c max_stops 5
+count_routes a c exact_stops 6
+count_routes a c xxx 6
+count_routes a c max_distance -3
+get_shortest_route a a
+ A A
+
+ a
+get_shortest_route b b
+load AB5 AC5 BC1 BA8 CB5 CA12 DE2 ED5
+get_route_distance A B E
+count_routes A E max_stops 10
+count_routes A A exact_stops 6
+count_routes A C xxx 6
+count_routes A C xxx -3
+get_shortest_route A A
+get_shortest_route E A

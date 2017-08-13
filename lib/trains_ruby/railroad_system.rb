@@ -2,7 +2,7 @@
 module TrainsRuby
 
   NoSuchRouteError = Class.new(StandardError)
-  ConstraintError = Class.new(StandardError)
+  NoSuchStationError = Class.new(StandardError)
 
   class RailroadSystem
     include TrainsRuby::RouteCountQuery

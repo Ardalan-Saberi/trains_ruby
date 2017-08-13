@@ -1,0 +1,11 @@
+load AB5 BC4 CD8 DC8 DE6 AD5 CE2 EB3 AE7
+get_route_distance A B C
+get_route_distance A D
+get_route_distance A D C
+get_route_distance A E B C D
+get_route_distance A E D
+count_routes C C max_stops 3
+count_routes A C exact_stops 4
+get_shortest_route A C
+get_shortest_route B B
+count_routes C C max_distance 30

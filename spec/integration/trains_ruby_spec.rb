@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Sample Input E2E test" do
+describe "Sample Input Integration test" do
 
   before(:each) do
     @rs = TrainsRuby::RailroadHelper.create_railroad_system_from_string("AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7")

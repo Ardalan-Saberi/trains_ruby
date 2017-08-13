@@ -4,7 +4,7 @@ describe TrainsRuby::RouteDistanceQuery do
   include_context "shared railroad doubles"
 
   before(:each) do
-    @empty_rs, @single_road_rs, @small_city_rs = double_railroads(TrainsRuby::RouteDistanceQuery)
+    @empty_rs, @single_road_rs, @small_city_rs, @disjoint_rs = double_railroads(TrainsRuby::RouteDistanceQuery)
   end
 
   describe "#get_route_distance" do

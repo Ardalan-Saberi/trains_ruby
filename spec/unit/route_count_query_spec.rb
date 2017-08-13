@@ -1,31 +1,30 @@
 require 'spec_helper'
 
-describe TrainsRuby::RouteCountQuery do
+describe R = TrainsRuby::RouteCountQuery do
   include_context "shared railroad doubles"
 
   before(:each) do
-    @empty_rs, @single_road_rs, @small_city_rs = double_railroads(TrainsRuby::RouteCountQuery)
+    @empty_rs, @single_road_rs, @small_city_rs, @disjoint_rs = double_railroads(TrainsRuby::RouteCountQuery)
   end
 
   describe "#count_routes" do
 
     it "should raise ConstraintError given invalid or nil constraint_type" do
-      expect{@single_road_rs.count_routes("A", "B", "no_constraint", 0)}.to raise_error(TrainsRuby::ConstraintError)
-      expect{@single_road_rs.count_routes("A", "B", nil, 0)}.to raise_error(TrainsRuby::ConstraintError)
+      expect{@single_road_rs.count_routes("A", "B", "no_constraint", 0)}.to raise_error(R::ConstraintError)
+      expect{@single_road_rs.count_routes("A", "B", nil, 0)}.to raise_error(R::ConstraintError)
     end
     it "should raise ConstraintError given not-integer, negaitive or nil constraint_value" do
-      expect{@single_road_rs.count_routes("A", "B", :exact_stops, Object.new)}.to raise_error(TrainsRuby::ConstraintError)
-      expect{@single_road_rs.count_routes("A", "B", :max_distance, -3)}.to raise_error(TrainsRuby::ConstraintError)
-      expect{@single_road_rs.count_routes("A", "B", :max_stops,  nil)}.to raise_error(TrainsRuby::ConstraintError)
+      expect{@single_road_rs.count_routes("A", "B", :exact_stops, Object.new)}.to raise_error(R::ConstraintError)
+      expect{@single_road_rs.count_routes("A", "B", :max_distance, -3)}.to raise_error(R::ConstraintError)
+      expect{@single_road_rs.count_routes("A", "B", :max_stops,  nil)}.to raise_error(R::ConstraintError)
     end
 
     it "should return zero if origin or destination doesn't exist" do
-      expect{@single_road_rs.count_routes("A", "no_station", :max_stops, 0)}.to raise_error(TrainsRuby::NoSuchRouteError)
+      expect{@single_road_rs.count_routes("A", "no_station", :max_stops, 0)}.to raise_error(TrainsRuby::NoSuchStationError)
     end
     it "should return zero if origin or destination doesn't exist" do
-      expect{@single_road_rs.count_routes("no_station", "A", :max_distance, 0)}.to raise_error(TrainsRuby::NoSuchRouteError)
+      expect{@single_road_rs.count_routes("no_station", "A", :max_distance, 0)}.to raise_error(TrainsRuby::NoSuchStationError)
     end
-
 
     it "should count simple routes between origin and destination with maximum distance constraint" do
       expect(@small_city_rs.count_routes("A", "C", :max_distance, 9)).to eql(1)

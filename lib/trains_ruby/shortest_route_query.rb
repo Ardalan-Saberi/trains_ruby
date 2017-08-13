@@ -3,7 +3,7 @@ module TrainsRuby
     INFINITY = Float::INFINITY
 
     def get_shortest_route(origin, destination)
-      raise NoSuchRouteError unless stations[origin] && stations[destination]
+      raise NoSuchStationError, "invalid origin/destination" unless stations.key?(origin) && stations.key?(destination)
 
       min_distance_to, previous_station, unvisited = prepare_values(origin)
 
@@ -34,7 +34,7 @@ module TrainsRuby
         return min_cycle_distance
       end
 
-      raise NoSuchRouteError
+      raise NoSuchRouteError, "no route from origin(#{origin}) to destination(#{destination})"
     end
 
     private
