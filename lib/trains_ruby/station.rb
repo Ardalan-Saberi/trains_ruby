@@ -30,10 +30,6 @@ module TrainsRuby
     def hash
       name.hash
     end
-
-    def to_s
-      "<Station: #{@name} Neighbours: #{@neighbours}>"
-    end
   end
 
   private_constant :Station
