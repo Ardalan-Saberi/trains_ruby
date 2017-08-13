@@ -14,8 +14,8 @@ describe h = TrainsRuby::RailroadHelper do
       rs = h.create_railroad_system_from_string("AB25")
 
       expect(rs.stations).to have_key "A"
-      expect(rs.stations["A"]).to have_railroad_to "B"
-      expect(rs.stations["A"].get_distance_from("B")).to eql(25)
+      expect(rs.stations["A"].neighbours).to have_key "B"
+      expect(rs.stations["A"].neighbours["B"]).to eql(25)
     end
 
     it "raises error when string cannot be parsed" do
@@ -29,14 +29,14 @@ describe h = TrainsRuby::RailroadHelper do
       expect(rs.stations).to have_key "A"
       expect(rs.stations).to have_key "B"
       expect(rs.stations).to have_key "C"
-      expect(rs.stations["A"]).to have_railroad_to "B"
-      expect(rs.stations["B"]).to have_railroad_to "C"
-      expect(rs.stations["C"]).to have_railroad_to "B"
-      expect(rs.stations["B"]).not_to have_railroad_to "A"
-      expect(rs.stations["C"]).not_to have_railroad_to "C"
-      expect(rs.stations["A"].get_distance_from("B")).to eql(5)
-      expect(rs.stations["B"].get_distance_from("C")).to eql(22)
-      expect(rs.stations["C"].get_distance_from("B")).to eql(3)
+      expect(rs.stations["A"].neighbours).to have_key "B"
+      expect(rs.stations["B"].neighbours).to have_key "C"
+      expect(rs.stations["C"].neighbours).to have_key "B"
+      expect(rs.stations["B"].neighbours).not_to have_key "A"
+      expect(rs.stations["C"].neighbours).not_to have_key "C"
+      expect(rs.stations["A"].neighbours["B"]).to eql(5)
+      expect(rs.stations["B"].neighbours["C"]).to eql(22)
+      expect(rs.stations["C"].neighbours["B"]).to eql(3)
     end
   end
 end
