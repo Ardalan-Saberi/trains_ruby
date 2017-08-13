@@ -2,7 +2,7 @@
 
 # TLDR; Usage
 
-1- to install dev dependencies
+1- to install dev dependencies (in trains_ruby directory)
 
 *$ bundle install*
 
