@@ -19,17 +19,6 @@ describe R = TrainsRuby::RailroadSystem do
     @disjoint_rs = R.new
     @disjoint_rs.add_railroad("A", "B", 5)
     @disjoint_rs.add_railroad("D", "C", 11)
-
-    @sample_rs = R.new
-    @sample_rs.add_railroad("A", "B", 5)
-    @sample_rs.add_railroad("B", "C", 4)
-    @sample_rs.add_railroad("C", "D", 8)
-    @sample_rs.add_railroad("D", "C", 8)
-    @sample_rs.add_railroad("D", "E", 6)
-    @sample_rs.add_railroad("A", "D", 5)
-    @sample_rs.add_railroad("C", "E", 2)
-    @sample_rs.add_railroad("E", "B", 3)
-    @sample_rs.add_railroad("A", "E", 7)
   end
 
   describe "#get_route_distance" do
@@ -43,7 +32,7 @@ describe R = TrainsRuby::RailroadSystem do
     end
 
     it "should return the lenght of a single railroad when given a single hop route" do
-      expect(@single_road_rs.get_route_distance( "A", "B")).to eql 5
+      expect(@single_road_rs.get_route_distance("A", "B")).to eql 5
     end
 
     it "should return the correct sum of distances of all railroads along the route" do
@@ -88,6 +77,38 @@ describe R = TrainsRuby::RailroadSystem do
       expect(@small_city_rs.count_routes("A", "C", {constraint_type: :exact_stops, constraint_value: 1})).to eql(1)
       expect(@small_city_rs.count_routes("A", "C", {constraint_type: :exact_stops, constraint_value: 2})).to eql(2)
       expect(@small_city_rs.count_routes("A", "C", {constraint_type: :exact_stops, constraint_value: 3})).to eql(0)
+    end
+  end
+
+  describe "#get_shortest_route" do
+
+    it "raise NoSuchRoute when given empty railroad system" do
+      expect {@empty_rs.get_shortest_route("no_station1", "no_station2")}.to raise_error(R::NoSuchRouteError)
+    end
+
+    it "raise NoSuchRouteError when either of stations doesn't exist in railroad system" do
+      expect {@single_road_rs.get_shortest_route("no_station", "A")}.to raise_error(R::NoSuchRouteError)
+      expect {@single_road_rs.get_shortest_route("A", "no_station")}.to raise_error(R::NoSuchRouteError)
+    end
+
+    it "should return the length of the railroad in a single railroad system" do
+      expect(@single_road_rs.get_shortest_route("A", "B")).to eql 5
+    end
+
+    it "should raise NoSychRouteError when no routes between origin and destination" do
+      expect {@single_road_rs.get_shortest_route("B", "A")}.to raise_error(R::NoSuchRouteError)
+    end
+
+    it "should find shortest open routes when more than one way is possible" do
+      expect(@small_city_rs.get_shortest_route("A", "C")).to eql 8
+    end
+
+    it "should find shortest closed routes when more than one way is possible" do
+      expect(@small_city_rs.get_shortest_route("A", "A")).to eql 9
+      expect(@small_city_rs.get_shortest_route("B", "B")).to eql 12
+      expect(@small_city_rs.get_shortest_route("C", "C")).to eql 11
+      expect(@small_city_rs.get_shortest_route("D", "D")).to eql 9
+
     end
   end
 end
